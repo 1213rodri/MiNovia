@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe4b3 100%);
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Pollos decorativos en el fondo */
+        .chicken {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Sobre de carta */
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .envelope-wrapper:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope {
+            position: relative;
+            width: 350px;
+            height: 250px;
+            background: #ffb3d9;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 175px solid transparent;
+            border-right: 175px solid transparent;
+            border-top: 125px solid #ff99cc;
+            transform-origin: top;
+            transition: transform 1s ease;
+            z-index: 3;
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            z-index: 3;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 32px;
+            height: 50px;
+            border-radius: 32px 32px 0 0;
+            background: #ff0040;
+        }
+
+        .heart:before {
+            left: 32px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        /* Papel de la carta */
+        .letter {
+            position: absolute;
+            width: 320px;
+            height: 450px;
+            background: linear-gradient(to bottom, #fff 0%, #fffef8 100%);
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            padding: 40px 30px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 150%);
+            opacity: 0;
+            transition: all 1.5s ease;
+            z-index: 4;
+            overflow-y: auto;
+        }
+
+        .envelope.open .letter {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        .letter-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            text-align: left;
+        }
+
+        .letter-content h2 {
+            text-align: center;
+            color: #ff0040;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .letter-content p {
+            margin-bottom: 15px;
+            text-indent: 20px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+            font-style: italic;
+            color: #ff0040;
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #666;
+            font-size: 18px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .envelope.open + .instruction {
+            display: none;
+        }
+
+        /* Botón de cerrar */
+        #closeBtn {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff99cc;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 0, 64, 0.3);
+            transition: all 0.3s ease;
+            z-index: 5;
+            font-family: 'Georgia', serif;
+        }
+
+        #closeBtn:hover {
+            background: #ff66b3;
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 0, 64, 0.4);
+        }
+
+        #closeBtn:active {
+            transform: translateX(-50%) scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <!-- Pollos decorativos -->
+    <div class="chicken" style="top: 10%; left: 10%; animation-delay: 0s;">🐔</div>
+    <div class="chicken" style="top: 20%; right: 15%; animation-delay: 1s;">🐓</div>
+    <div class="chicken" style="bottom: 15%; left: 20%; animation-delay: 2s;">🐥</div>
+    <div class="chicken" style="bottom: 25%; right: 10%; animation-delay: 1.5s;">🐤</div>
+    <div class="chicken" style="top: 40%; left: 5%; animation-delay: 0.5s;">🐔</div>
+    <div class="chicken" style="top: 60%; right: 8%; animation-delay: 2.5s;">🐓</div>
+    <div class="chicken" style="bottom: 40%; left: 12%; animation-delay: 1.2s;">🐥</div>
+    <div class="chicken" style="top: 15%; right: 40%; animation-delay: 0.8s;">🐤</div>
+
+    <div class="envelope-wrapper" onclick="openLetter()">
+        <div class="envelope" id="envelope">
+            <div class="flap"></div>
+            <div class="heart"></div>
+            
+            <div class="letter">
+                <div class="letter-content">
+                    <h2>Para el Amor de Mi Vida 💕</h2>
+                    
+                    <p><strong>Mi amor,</strong></p>
+                    
+                    <p>Hoy, mientras pienso en ti, siento que el tiempo se vuelve un susurro suave que recorre mi piel y me recuerda que han pasado 79 días desde que Dios decidió cruzar nuestros caminos. Setenta y nueve días desde que tu nombre empezó a resonar dentro de mí como un latido distinto, más cálido, más firme, más verdadero. Y aunque aún estamos en esta etapa en la que nos conocemos, en la que descubrimos nuestras maneras de sentir, de reír, de pensarnos, yo ya llevo el corazón lleno de certezas que no se improvisan.</p>
+                    
+                    <p>Porque lo que siento por ti no nació de la casualidad. Nació de ti. De tu forma de hablar, de tu forma de mirar, de tu manera de entregarte al mundo con esa mezcla hermosa de fuerza y ternura. Nació de tu luz, de tu inocencia, de tu intensidad cuando amas. Y hoy quiero decirte, con toda la verdad que habita en mí, que te amo, que te quiero, que te adoro, y que cada palabra que te entrego no es un impulso pasajero, sino algo que nace desde el fondo más profundo de mi alma.</p>
+                    
+                    <p>Estos 79 días no han sido simplemente tiempo: han sido el inicio de un propósito. Han sido la prueba silenciosa de que contigo me siento llamado a algo más grande que yo. Algo que no se queda en meses ni en días, sino que se extiende más allá del calendario, más allá de la rutina, más allá de los miedos.</p>
+                    
+                    <p>Mi compromiso contigo no es una promesa vacía.</p>
+                    
+                    <p><strong>Mi amor, mi compromiso contigo es real, es sólido, es responsable y es sagrado.</strong></p>
+                    
+                    <p>Y cuando digo "contigo", no hablo solo de tu sonrisa o de tu voz. Hablo de tu mundo, de tu historia, de tu familia, de todo lo que te formó y te sostiene. Hablo de tu espíritu, de tus heridas, de tus sueños, de tus dudas y de tus risas. Y por encima de todo, hablo también de mi compromiso con Dios, porque sé que un amor que no se sostiene en Él, tarde o temprano se tambalea. Pero contigo, yo quiero construir algo que no se derrumbe.</p>
+                    
+                    <p>Quiero que lo sepas con claridad, mi vida: no estás con alguien que te mira solo por tu cuerpo, ni por momentos vacíos disfrazados de pasión. No estás con alguien que te quiera solo cuando conviene, o solo en lo bonito, o solo en lo fácil.</p>
+                    
+                    <p><strong>Yo no te sexualizo, mi amor.<br>
+                    Yo te valoro.<br>
+                    Yo te honro.</strong></p>
+                    
+                    <p>Y sí, tendremos momentos de risa, de locura, de complicidad, incluso de esas bromas que solo tú y yo entendemos, esos momentos de programadores jot, esas tonterías que nos hacen sentir cerca. Pero aun en esos momentos, jamás permitiré que sientas que eres un cuerpo para mí. Tú eres alma. Tú eres corazón. Tú eres propósito.</p>
+                    
+                    <p>Quiero que te sientas segura conmigo, segura sentimentalmente, segura físicamente, segura emocionalmente. Quiero que, cuando me mires, sientas paz. Que cuando escuches mi voz, sientas que no estás sola. Que cuando tengas miedo, sepas que puedes apoyarte en mí. No voy a desaparecer cuando las cosas se pongan difíciles. No voy a esconderme cuando la vida se vuelva pesada. No voy a dejarte, ni ahora ni después.</p>
+                    
+                    <p><strong>Porque tú mereces un amor que no sea tibio.<br>
+                    Tú mereces un amor que se quede.<br>
+                    Y yo estoy aquí para quedarme.</strong></p>
+                    
+                    <p>Tú eres la persona por la que doy gracias cada día, la persona que Dios puso en mi camino para enseñarme que el amor no siempre llega cuando se busca, sino cuando se necesita. Y yo te necesito. No para completarme, sino para caminar contigo, para acompañarte, para sostenerte y dejarme sostener, para aprender de ti y entregarte lo mejor de mí.</p>
+                    
+                    <p>Estos 79 días han sido suficientes para saber que no quiero algo pasajero… quiero algo verdadero.</p>
+                    
+                    <p>Quiero cuidarte, escucharte, abrazarte con paciencia, amarte con respeto, mirarte con ternura y, sobre todo, quiero estar a tu lado con bondad, con lealtad y con esa fe que se construye a dos.</p>
+                    
+                    <p><strong>Si Dios te puso en mis manos, es porque debo cuidarte con todo lo que soy.</strong></p>
+                    
+                    <p>Y eso haré, mi amor. Hoy, mañana, y todos los días que Él permita.</p>
+                    
+                    <p>Gracias por existir.<br>
+                    Gracias por dejarme conocerte.<br>
+                    Gracias por estos 79 días que ya se sienten como un hogar.</p>
+                    
+                    <div class="signature">
+                        Con todo mi corazón,<br>
+                        Rodrigo ❤️
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="instruction" id="instruction">Haz clic en el sobre para abrir la carta 💌</div>
+
+    <!-- Botón para cerrar -->
+    <button id="closeBtn" style="display: none;">Cerrar carta ✕</button>
+
+    <!-- Audio oculto -->
+    <audio id="song" preload="auto">
+        <source src="tear-my-heart.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        let opened = false;
+        
+        function openLetter() {
+            const envelope = document.getElementById('envelope');
+            const song = document.getElementById('song');
+            const closeBtn = document.getElementById('closeBtn');
+            const instruction = document.getElementById('instruction');
+            
+            if (!opened) {
+                envelope.classList.add('open');
+                
+                // Reproducir canción después de 1 segundo (cuando la carta esté visible)
+                setTimeout(() => {
+                    song.play().catch(e => {
+                        console.log('No se pudo reproducir el audio automáticamente');
+                    });
+                    closeBtn.style.display = 'block';
+                }, 1000);
+                
+                instruction.style.display = 'none';
+                opened = true;
+            }
+        }
+
+        // Función para cerrar la carta
+        document.getElementById('closeBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const envelope = document.getElementById('envelope');
+            const song = document.getElementById('song');
+            const closeBtn = document.getElementById('closeBtn');
+            const instruction = document.getElementById('instruction');
+            
+            envelope.classList.remove('open');
+            song.pause();
+            song.currentTime = 0;
+            
+            setTimeout(() => {
+                closeBtn.style.display = 'none';
+                instruction.style.display = 'block';
+                opened = false;
+            }, 500);
+        });
+    </script>
+</body>
+</html>
